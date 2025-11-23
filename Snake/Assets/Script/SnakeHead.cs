@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class SnakeHead : MonoBehaviour
 {
-    
-    void Start()
-    {
-        
-    }
-
-
     public int Speed;
 
-
-    void Update()
+    private void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * Speed);
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Rigidbody2D rb = collision.attachedRigidbody;
