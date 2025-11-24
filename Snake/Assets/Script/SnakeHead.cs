@@ -12,7 +12,6 @@ public class SnakeHead : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-          //changing rotation
           transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
@@ -31,4 +30,15 @@ public class SnakeHead : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, 90f);
         }
     }
+
+    public void Destroying()
+    {
+        Destroy(gameObject);
+    }
+
+    public void TailInstantiating()
+    {
+        print("+1 to tail");
+    }
+
 }

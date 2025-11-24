@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Barrier : MonoBehaviour
+public class Fruit : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,7 +10,8 @@ public class Barrier : MonoBehaviour
             SnakeHead snakeHead = rb.GetComponent<SnakeHead>();
             if (snakeHead != null)
             {
-                snakeHead.Destroying();
+                snakeHead.TailInstantiating();
+                Destroy(gameObject);
             }
         }
     }
