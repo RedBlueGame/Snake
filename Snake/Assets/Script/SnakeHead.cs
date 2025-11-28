@@ -6,6 +6,9 @@ public class SnakeHead : MonoBehaviour
 {
     public int Speed;
 
+    public SnakeTail SnakeTail;
+    public List<Vector3> Route;
+
     private void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * Speed);
@@ -38,7 +41,8 @@ public class SnakeHead : MonoBehaviour
 
     public void TailInstantiating()
     {
-        print("+1 to tail");
+        //print("+1 to tail");
+        Instantiate(SnakeTail);
     }
 
 }
