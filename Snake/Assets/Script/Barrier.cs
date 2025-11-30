@@ -12,7 +12,7 @@ public class Barrier : MonoBehaviour
             SnakeHead snakeHead = rb.GetComponent<SnakeHead>();
             if (snakeHead != null)
             {
-                snakeHead.Destroying();
+                snakeHead.Die();
             }
         }
     }

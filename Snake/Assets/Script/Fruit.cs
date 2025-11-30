@@ -10,7 +10,7 @@ public class Fruit : MonoBehaviour
             SnakeHead snakeHead = rb.GetComponent<SnakeHead>();
             if (snakeHead != null)
             {
-                snakeHead.TailInstantiating();
+                snakeHead.InstantiateTail();
                 Destroy(gameObject);
             }
         }
