@@ -41,8 +41,7 @@ public class SnakeHead : MonoBehaviour
 
     public void TailInstantiating()
     {
-        //print("+1 to tail");
-        Instantiate(SnakeTail);
+        SnakeTail tail = Instantiate(SnakeTail, transform.position, transform.rotation);
     }
 
 }
