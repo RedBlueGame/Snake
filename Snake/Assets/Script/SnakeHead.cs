@@ -36,7 +36,6 @@ public class SnakeHead : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * Speed);
@@ -49,7 +48,7 @@ public class SnakeHead : MonoBehaviour
         {
           Route[0] = transform.position;
         }
-        for (int i = 0;i > Tails.Count; i++)
+        for (int i = 0;i < Tails.Count; i++)
         {
            Tails[i].transform.position = Route[(i + 1) * Offset - 1];           
         }
