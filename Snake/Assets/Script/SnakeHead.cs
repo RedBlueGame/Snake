@@ -6,6 +6,7 @@ public class SnakeHead : MonoBehaviour
 {
     public int Speed;
     public int Offset;
+    public float Timer;
     public SnakeTail TailPF;
     public SnakeTail Tail;
     public List<Vector3> Route;
@@ -18,6 +19,14 @@ public class SnakeHead : MonoBehaviour
     public void InstantiateTail()
     {
          Tail = Instantiate(TailPF, transform.position, transform.rotation);
+        if (TailPF != null)
+        {
+            Timer -= Time.deltaTime;
+           /* if (Timer < -3)
+            {
+                Timer = 0;
+            } */
+        }
     }
 
     private void Start()
