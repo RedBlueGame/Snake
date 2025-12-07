@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.MPE;
 using UnityEngine;
 
 public class SnakeHead : MonoBehaviour
@@ -8,8 +9,8 @@ public class SnakeHead : MonoBehaviour
     public int Offset;
     public float Timer;
     public SnakeTail TailPF;
-    public SnakeTail Tail;
     public List<Vector3> Route;
+    public List<SnakeTail> Tails;
 
     public void Die()
     {
@@ -18,7 +19,13 @@ public class SnakeHead : MonoBehaviour
 
     public void InstantiateTail()
     {
-         Tail = Instantiate(TailPF, transform.position, transform.rotation);
+        SnakeTail tail =  Instantiate(TailPF, transform.position, transform.rotation);
+        Tails.Add(tail);
+        for (int i = 0; i < Offset; i++)
+        {
+            Route.Add(transform.position);
+        }
+
         if (TailPF != null)
         {
             Timer -= Time.deltaTime;
@@ -29,23 +36,24 @@ public class SnakeHead : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        for (int i = 0; i < Offset; i++)
-        {
-           Route.Add(transform.position);
-        }
-    }
 
     private void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * Speed);
-        for (int i = Offset - 1; i > 0; i--)
+        for (int i = Route.Count - 1; i > 0; i--)
         {
             Route[i] = Route[i - 1];
         }
-        Route[0] = transform.position;
-        Tail.transform.position = Route[Offset - 1];
+
+        if (Route.Count > 0)
+        {
+          Route[0] = transform.position;
+        }
+        for (int i = 0;i > Tails.Count; i++)
+        {
+           Tails[i].transform.position = Route[(i + 1) * Offset - 1];           
+        }
+
 
         if (Input.GetKeyDown(KeyCode.W))
         {
