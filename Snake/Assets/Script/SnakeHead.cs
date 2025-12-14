@@ -8,9 +8,15 @@ public class SnakeHead : MonoBehaviour
     public int Speed;
     public int Offset;
     public float Timer;
-    public SnakeTail TailPF;
+    public Transform TailPF;
     public List<Vector3> Route;
-    public List<SnakeTail> Tails;
+    public List<Transform> Tails;
+
+    public void Start()
+    {
+        Tails.Add(transform);
+        Route.Add(transform.position);
+    }
 
     public void Die()
     {
@@ -19,7 +25,7 @@ public class SnakeHead : MonoBehaviour
 
     public void InstantiateTail()
     {
-        SnakeTail tail =  Instantiate(TailPF, transform.position, transform.rotation);
+        Transform tail =  Instantiate(TailPF, transform.position, transform.rotation);
         Tails.Add(tail);
         for (int i = 0; i < Offset; i++)
         {
@@ -44,13 +50,11 @@ public class SnakeHead : MonoBehaviour
             Route[i] = Route[i - 1];
         }
 
-        if (Route.Count > 0)
-        {
-          Route[0] = transform.position;
-        }
+        Route[0] = transform.position;
+
         for (int i = 0;i < Tails.Count; i++)
         {
-           Tails[i].transform.position = Route[(i + 1) * Offset - 1];           
+           Tails[i].position = Route[i * Offset];           
         }
 
 

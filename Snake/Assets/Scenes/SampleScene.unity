@@ -1051,9 +1051,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   Offset: 15
-  TailPF: {fileID: 4928152221436917001, guid: 8e22e12266d5b3e40bba412c1af1a4a2, type: 3}
-  Tail: {fileID: 0}
+  Timer: 0
+  TailPF: {fileID: 2129056962695199537, guid: 8e22e12266d5b3e40bba412c1af1a4a2, type: 3}
   Route: []
+  Tails: []
 --- !u!4 &1250827926
 Transform:
   m_ObjectHideFlags: 0
