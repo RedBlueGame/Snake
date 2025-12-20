@@ -11,11 +11,13 @@ public class SnakeHead : MonoBehaviour
     public Transform TailPF;
     public List<Vector3> Route;
     public List<Transform> Tails;
+    public List<Quaternion> Rotations;
 
     public void Start()
     {
         Tails.Add(transform);
         Route.Add(transform.position);
+        Rotations.Add(transform.rotation);
     }
 
     public void Die()
@@ -30,6 +32,7 @@ public class SnakeHead : MonoBehaviour
         for (int i = 0; i < Offset; i++)
         {
             Route.Add(transform.position);
+            Rotations.Add(transform.rotation);
         }
 
         if (TailPF != null)
@@ -55,6 +58,18 @@ public class SnakeHead : MonoBehaviour
         for (int i = 0;i < Tails.Count; i++)
         {
            Tails[i].position = Route[i * Offset];           
+        }
+
+        for (int i = Rotations.Count - 1; i > 0; i--)
+        {
+            Rotations[i] = Rotations[i - 1];
+        }
+
+        Rotations[0] = transform.rotation;
+
+        for (int i = 0; i < Tails.Count; i++)
+        {
+            Tails[i].rotation = Rotations[0];
         }
 
 
