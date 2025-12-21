@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.MPE;
 using UnityEngine;
 
 public class SnakeHead : MonoBehaviour
@@ -8,74 +6,69 @@ public class SnakeHead : MonoBehaviour
     public int Speed;
     public int Offset;
     public float Timer;
-    public Transform TailPF;
-    public List<Vector3> Route;
+    public Transform TailPf;
     public List<Transform> Tails;
+    public List<Vector3> Positions;
     public List<Quaternion> Rotations;
 
     public void Start()
     {
         Tails.Add(transform);
-        Route.Add(transform.position);
+        Positions.Add(transform.position);
         Rotations.Add(transform.rotation);
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        foreach (Transform t in Tails)
+        {
+            Destroy(t.gameObject);
+        }
     }
 
     public void InstantiateTail()
     {
-        Transform tail =  Instantiate(TailPF, transform.position, transform.rotation);
+        Transform tail = Instantiate(TailPf, Positions[^1], Rotations[^1]);
+        if (Tails.Count == 1)
+        {
+            tail.GetComponentInChildren<Collider2D>().enabled = false;
+        }
         Tails.Add(tail);
         for (int i = 0; i < Offset; i++)
         {
-            Route.Add(transform.position);
-            Rotations.Add(transform.rotation);
+            Positions.Add(Positions[^1]);
+            Rotations.Add(Rotations[^1]);
         }
 
-        if (TailPF != null)
+        if (TailPf != null)
         {
             Timer -= Time.deltaTime;
-           /* if (Timer < -3)
-            {
-                Timer = 0;
-            } */
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        transform.Translate(Vector3.up * Time.deltaTime * Speed);
+        for (int i = Positions.Count - 1; i > 0; i--)
+        {
+            Positions[i] = Positions[i - 1];
+            Rotations[i] = Rotations[i - 1];
+        }
+
+        Positions[0] = transform.position;
+        Rotations[0] = transform.rotation;
+
+        for (int i = 0; i < Tails.Count; i++)
+        {
+            Tails[i].SetPositionAndRotation(Positions[i * Offset], Rotations[0]);
         }
     }
 
     private void Update()
     {
-        transform.Translate(Vector3.up * Time.deltaTime * Speed);
-        for (int i = Route.Count - 1; i > 0; i--)
-        {
-            Route[i] = Route[i - 1];
-        }
-
-        Route[0] = transform.position;
-
-        for (int i = 0;i < Tails.Count; i++)
-        {
-           Tails[i].position = Route[i * Offset];           
-        }
-
-        for (int i = Rotations.Count - 1; i > 0; i--)
-        {
-            Rotations[i] = Rotations[i - 1];
-        }
-
-        Rotations[0] = transform.rotation;
-
-        for (int i = 0; i < Tails.Count; i++)
-        {
-            Tails[i].rotation = Rotations[0];
-        }
-
-
         if (Input.GetKeyDown(KeyCode.W))
         {
-          transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
